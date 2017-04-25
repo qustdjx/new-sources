@@ -1,0 +1,240 @@
+SELECT code, value FROM  (SELECT * FROM (SELECT * FROM `xjddemo`.`ecs_ecsmart_shop_config` UNION SELECT * FROM `xjddemo`.`ecs_shop_config`) AS total group by code) AS totals  WHERE parent_id > 0
+
+SELECT userid, adminid, user_name, user_rank, discount, email, data, expiry FROM `xjddemo`.`ecs_sessions` WHERE sesskey = '7748c7fdab3f7777b20da5ac35480a33'
+
+INSERT INTO `xjddemo`.`ecs_sessions` (sesskey, expiry, ip, data) VALUES ('7748c7fdab3f7777b20da5ac35480a33', '1491104455', '127.0.0.1', 'a:0:{}')
+
+SELECT user_id, user_name, password  FROM `xjddemo`.`ecs_users` WHERE user_id = '98' AND password = 'a2cea6fba03da6ff9091bde9a8ebd2ab'
+
+SELECT u.user_money,u.email, u.pay_points, u.user_rank, u.rank_points,  IFNULL(b.type_money, 0) AS user_bonus, u.last_login, u.last_ip FROM `xjddemo`.`ecs_users` AS u  LEFT JOIN `xjddemo`.`ecs_user_bonus` AS ub ON ub.user_id = u.user_id AND ub.used_time = 0  LEFT JOIN `xjddemo`.`ecs_bonus_type` AS b ON b.type_id = ub.bonus_type_id AND b.use_start_date <= '2017-04-02' AND b.use_end_date >= '2017-04-02'  WHERE u.user_id = '98'
+
+SELECT rank_id, discount FROM `xjddemo`.`ecs_user_rank` WHERE special_rank = '0' AND min_points <= 0 AND max_points > 0
+
+UPDATE `xjddemo`.`ecs_users` SET visit_count = visit_count + 1,  last_ip = '127.0.0.1', last_login = '1491104455' WHERE user_id = '98'
+
+UPDATE `xjddemo`.`ecs_users` SET is_fenxiao = 1 WHERE is_fenxiao <> 0
+
+SELECT is_fenxiao FROM `xjddemo`.`ecs_users` WHERE user_id = '98'
+
+SELECT c.cat_id, c.cat_name, c.measure_unit, c.parent_id, c.is_show, c.show_in_nav, c.grade, c.sort_order, COUNT(s.cat_id) AS has_children FROM `xjddemo`.`ecs_category` AS c LEFT JOIN `xjddemo`.`ecs_category` AS s ON s.parent_id=c.cat_id WHERE c.is_virtual= '0' GROUP BY c.cat_id ORDER BY c.parent_id, c.sort_order ASC
+
+SELECT cat_id, COUNT(*) AS goods_num  FROM `xjddemo`.`ecs_goods` WHERE is_delete = 0 AND is_on_sale = 1  GROUP BY cat_id
+
+SELECT gc.cat_id, COUNT(*) AS goods_num  FROM `xjddemo`.`ecs_goods_cat` AS gc , `xjddemo`.`ecs_goods` AS g  WHERE g.goods_id = gc.goods_id AND g.is_delete = 0 AND g.is_on_sale = 1  GROUP BY gc.cat_id
+
+SELECT * FROM `xjddemo`.`ecs_nav`
+            WHERE ifshow = '1' ORDER BY type, vieworder
+
+SELECT value FROM  (SELECT * FROM (SELECT * FROM `xjddemo`.`ecs_ecsmart_shop_config` UNION SELECT * FROM `xjddemo`.`ecs_shop_config`) AS total group by code) AS totals  WHERE id = 419
+
+SELECT c.cat_id, c.cat_name, c.sort_order, a.article_id, a.title, a.file_url, a.open_type FROM `xjddemo`.`ecs_article` AS a LEFT JOIN `xjddemo`.`ecs_article_cat` AS c ON a.cat_id = c.cat_id WHERE c.cat_type = 5 AND a.is_open = 1 ORDER BY c.sort_order ASC, a.article_id
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE 1  and user_id=98 and extension_code <> 'virtual_good'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE 1  and user_id=98 and extension_code <> 'virtual_good'  AND order_status  IN ('1','5')  AND shipping_status  IN ('2')  AND pay_status  IN ('2','1')  
+
+SELECT pay_id FROM `xjddemo`.`ecs_payment` WHERE is_cod = 1
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE 1  and user_id=98 and extension_code <> 'virtual_good'  AND   order_status  IN ('1','5','6')  AND   shipping_status  IN ('0','3','5')  AND ( pay_status  IN ('2','1')  OR pay_id  IN ('6') ) 
+
+SELECT pay_id FROM `xjddemo`.`ecs_payment` WHERE is_cod = 0
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE 1  and user_id=98 and extension_code <> 'virtual_good'  AND   order_status  IN ('1','0')  AND   pay_status = '0' AND ( shipping_status  IN ('1','2')  OR pay_id  IN ('1','2','3','4','5','7') ) 
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE 1  and user_id=98 and extension_code <> 'virtual_good'  AND order_status  IN ('1','5')  AND shipping_status = '1' 
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE 1  and user_id=98 and extension_code <> 'virtual_good'  AND order_status = '0' 
+
+select count(*) from `xjddemo`.`ecs_collect_goods` where user_id = 98
+
+select count(*) from `xjddemo`.`ecs_comment` where user_id = 98
+
+SELECT rank_name, special_rank FROM `xjddemo`.`ecs_user_rank` WHERE rank_id = '1'
+
+SELECT rank_points FROM `xjddemo`.`ecs_users` WHERE user_id = '98'
+
+SELECT rank_name,min_points FROM `xjddemo`.`ecs_user_rank` WHERE min_points > '0' ORDER BY min_points ASC LIMIT 1
+
+select headimgurl from `xjddemo`.`ecs_weixin_user` where ecuid = '98'
+
+select headimg from `xjddemo`.`ecs_users` where user_id = 98
+
+select value from  (SELECT * FROM (SELECT * FROM `xjddemo`.`ecs_ecsmart_shop_config` UNION SELECT * FROM `xjddemo`.`ecs_shop_config`) AS total group by code) AS totals  where code = 'pc_url' 
+
+SELECT is_recomm FROM `xjddemo`.`ecs_user_rank` r LEFT JOIN`xjddemo`.`ecs_users` u ON r.rank_id = u.user_rank WHERE u.user_id = '98'
+
+SELECT mobile_phone from `xjddemo`.`ecs_users` where user_id='98'
+
+SELECT SUM(bt.type_money) AS bonus_value, COUNT(*) AS bonus_count FROM `xjddemo`.`ecs_user_bonus` AS ub, `xjddemo`.`ecs_bonus_type` AS bt WHERE ub.user_id = '98' AND ub.bonus_type_id = bt.type_id AND ub.order_id = 0
+
+SELECT * FROM `xjddemo`.`ecs_users` WHERE user_id = '98'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE user_id = '98' AND add_time > '1488397255'
+
+SELECT order_id, order_sn  FROM `xjddemo`.`ecs_order_info` WHERE user_id = '98' AND shipping_time > '1491061433' AND order_status = '1' AND shipping_status  IN ('1','2')  
+
+SELECT act_id, goods_name, end_time FROM `xjddemo`.`ecs_goods_activity` WHERE act_type = '0' AND (is_finished = 1 OR (is_finished = 0 AND end_time <= '1491104455'))
+
+SELECT act_id, goods_name, end_time FROM `xjddemo`.`ecs_goods_activity` WHERE act_type = '2' AND (is_finished = 1 OR (is_finished = 0 AND end_time <= '1491104455'))
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '1'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '1'
+
+SELECT a.*, u.user_name FROM `xjddemo`.`ecs_auction_log` AS a, `xjddemo`.`ecs_users` AS u WHERE a.bid_user = u.user_id AND act_id = '1' ORDER BY a.log_id DESC
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '1' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '2'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '2'
+
+SELECT a.*, u.user_name FROM `xjddemo`.`ecs_auction_log` AS a, `xjddemo`.`ecs_users` AS u WHERE a.bid_user = u.user_id AND act_id = '2' ORDER BY a.log_id DESC
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '2' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '5'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '5'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '5' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '6'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '6'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '6' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '7'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '7'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '7' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '9'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '9'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '9' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '10'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '10'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '10' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '11'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '11'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '11' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '12'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '12'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '12' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '15'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '15'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '15' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '22'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '22'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '22' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '24'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '24'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '24' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '26'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '26'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '26' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '33'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '33'
+
+SELECT a.*, u.user_name FROM `xjddemo`.`ecs_auction_log` AS a, `xjddemo`.`ecs_users` AS u WHERE a.bid_user = u.user_id AND act_id = '33' ORDER BY a.log_id DESC
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '33' AND order_status  IN ('1','0') 
+
+SELECT * FROM `xjddemo`.`ecs_goods_activity` WHERE act_id = '36'
+
+SELECT COUNT(DISTINCT bid_user) FROM `xjddemo`.`ecs_auction_log` WHERE act_id = '36'
+
+SELECT COUNT(*) FROM `xjddemo`.`ecs_order_info` WHERE extension_code = 'auction' AND extension_id = '36' AND order_status  IN ('1','0') 
+
+SELECT region, library, sort_order, id, number, type FROM `xjddemo`.`ecs_ecsmart_template` WHERE theme = '68ecshopcom_mobile' AND filename = 'user_clips' AND type > 0 AND remarks='' ORDER BY region, library, sort_order
+
+SELECT u.user_id, u.email, u.user_name, u.user_money, u.pay_points, u.reg_time FROM `xjddemo`.`ecs_users` AS u  WHERE u.user_id = '98'
+
+SELECT SUM(bt.type_money) AS bonus_value, COUNT(*) AS bonus_count FROM `xjddemo`.`ecs_user_bonus` AS ub, `xjddemo`.`ecs_bonus_type` AS bt WHERE ub.user_id = '98' AND ub.bonus_type_id = bt.type_id AND ub.order_id = 0
+
+SELECT u.user_id, u.email, u.user_name, u.user_money, u.pay_points, u.reg_time FROM `xjddemo`.`ecs_users` AS u  WHERE u.user_id = '98'
+
+SELECT SUM(bt.type_money) AS bonus_value, COUNT(*) AS bonus_count FROM `xjddemo`.`ecs_user_bonus` AS ub, `xjddemo`.`ecs_bonus_type` AS bt WHERE ub.user_id = '98' AND ub.bonus_type_id = bt.type_id AND ub.order_id = 0
+
+select value from  (SELECT * FROM (SELECT * FROM `xjddemo`.`ecs_ecsmart_shop_config` UNION SELECT * FROM `xjddemo`.`ecs_shop_config`) AS total group by code) AS totals  where code = 'service_phone'
+
+SELECT c.*,g.goods_name,g.goods_thumb,g.goods_id,c.goods_number,c.goods_price FROM `xjddemo`.`ecs_cart` AS c  LEFT JOIN `xjddemo`.`ecs_goods` AS g ON g.goods_id=c.goods_id  WHERE c.user_id='98'  AND rec_type = '0'
+
+SELECT SUM(goods_number) AS number, SUM(goods_price * goods_number) AS amount FROM `xjddemo`.`ecs_cart` AS c  WHERE c.user_id='98'  AND rec_type = '0'
+
+UPDATE `xjddemo`.`ecs_sessions` SET expiry = '1491104455', ip = '127.0.0.1', userid = '98', adminid = '0', user_name='涤生', user_rank='1', discount='1', email='zhaobod6@163.com', data = 'a:5:{s:7:\"from_ad\";i:0;s:7:\"referer\";s:6:\"本站\";s:10:\"login_fail\";i:0;s:9:\"last_time\";s:10:\"1491061433\";s:7:\"last_ip\";s:9:\"127.0.0.1\";}' WHERE sesskey = '7748c7fdab3f7777b20da5ac35480a33' LIMIT 1
+
+SELECT code, value FROM  (SELECT * FROM (SELECT * FROM `xjddemo`.`ecs_ecsmart_shop_config` UNION SELECT * FROM `xjddemo`.`ecs_shop_config`) AS total group by code) AS totals  WHERE parent_id > 0
+
+SELECT userid, adminid, user_name, user_rank, discount, email, data, expiry FROM `xjddemo`.`ecs_sessions` WHERE sesskey = '7748c7fdab3f7777b20da5ac35480a33'
+
+SELECT user_id, user_name, password  FROM `xjddemo`.`ecs_users` WHERE user_id = '98' AND password = 'a2cea6fba03da6ff9091bde9a8ebd2ab'
+
+SELECT u.user_money,u.email, u.pay_points, u.user_rank, u.rank_points,  IFNULL(b.type_money, 0) AS user_bonus, u.last_login, u.last_ip FROM `xjddemo`.`ecs_users` AS u  LEFT JOIN `xjddemo`.`ecs_user_bonus` AS ub ON ub.user_id = u.user_id AND ub.used_time = 0  LEFT JOIN `xjddemo`.`ecs_bonus_type` AS b ON b.type_id = ub.bonus_type_id AND b.use_start_date <= '2017-04-02' AND b.use_end_date >= '2017-04-02'  WHERE u.user_id = '98'
+
+SELECT rank_id, discount FROM `xjddemo`.`ecs_user_rank` WHERE special_rank = '0' AND min_points <= 0 AND max_points > 0
+
+UPDATE `xjddemo`.`ecs_users` SET visit_count = visit_count + 1,  last_ip = '127.0.0.1', last_login = '1491104473' WHERE user_id = '98'
+
+UPDATE `xjddemo`.`ecs_users` SET is_fenxiao = 1 WHERE is_fenxiao <> 0
+
+SELECT is_fenxiao FROM `xjddemo`.`ecs_users` WHERE user_id = '98'
+
+SELECT c.cat_id, c.cat_name, c.measure_unit, c.parent_id, c.is_show, c.show_in_nav, c.grade, c.sort_order, COUNT(s.cat_id) AS has_children FROM `xjddemo`.`ecs_category` AS c LEFT JOIN `xjddemo`.`ecs_category` AS s ON s.parent_id=c.cat_id WHERE c.is_virtual= '0' GROUP BY c.cat_id ORDER BY c.parent_id, c.sort_order ASC
+
+SELECT cat_id, COUNT(*) AS goods_num  FROM `xjddemo`.`ecs_goods` WHERE is_delete = 0 AND is_on_sale = 1  GROUP BY cat_id
+
+SELECT gc.cat_id, COUNT(*) AS goods_num  FROM `xjddemo`.`ecs_goods_cat` AS gc , `xjddemo`.`ecs_goods` AS g  WHERE g.goods_id = gc.goods_id AND g.is_delete = 0 AND g.is_on_sale = 1  GROUP BY gc.cat_id
+
+SELECT * FROM `xjddemo`.`ecs_nav`
+            WHERE ifshow = '1' ORDER BY type, vieworder
+
+SELECT value FROM  (SELECT * FROM (SELECT * FROM `xjddemo`.`ecs_ecsmart_shop_config` UNION SELECT * FROM `xjddemo`.`ecs_shop_config`) AS total group by code) AS totals  WHERE id = 419
+
+SELECT c.cat_id, c.cat_name, c.sort_order, a.article_id, a.title, a.file_url, a.open_type FROM `xjddemo`.`ecs_article` AS a LEFT JOIN `xjddemo`.`ecs_article_cat` AS c ON a.cat_id = c.cat_id WHERE c.cat_type = 5 AND a.is_open = 1 ORDER BY c.sort_order ASC, a.article_id
+
+SELECT * FROM `xjddemo`.`ecs_users` WHERE user_id = '98'
+
+SELECT user_id AS user_id,user_name AS user_name,email AS email,sex AS sex,is_validated AS email_validated, mobile_phone AS mobile_phone, validated AS mobile_validated, birthday AS birthday,reg_time AS reg_time, password AS password, ec_salt AS ec_salt  FROM `xjddemo`.`ecs_users` WHERE user_name='涤生'
+
+SELECT rank_id, rank_name, discount, min_points FROM `xjddemo`.`ecs_user_rank` WHERE min_points<= 0 ORDER BY min_points DESC
+
+SELECT type_name, type_money FROM `xjddemo`.`ecs_bonus_type` AS t1, `xjddemo`.`ecs_user_bonus` AS t2 WHERE t1.type_id = t2.bonus_type_id AND t2.user_id = '98' AND t1.use_start_date <= '2017-04-02 03:41:13' AND t1.use_end_date > '2017-04-02 03:41:13' AND t2.order_id = 0
+
+SELECT * FROM `xjddemo`.`ecs_reg_fields` WHERE type < 2 AND display = 1 ORDER BY dis_order, id
+
+SELECT reg_field_id, content FROM `xjddemo`.`ecs_reg_extend_info` WHERE user_id = 98
+
+SELECT region, library, sort_order, id, number, type FROM `xjddemo`.`ecs_ecsmart_template` WHERE theme = '68ecshopcom_mobile' AND filename = 'user_transaction' AND type > 0 AND remarks='' ORDER BY region, library, sort_order
+
+UPDATE `xjddemo`.`ecs_sessions` SET expiry = '1491104473', ip = '127.0.0.1', userid = '98', adminid = '0', user_name='涤生', user_rank='1', discount='1', email='zhaobod6@163.com', data = 'a:6:{s:7:\"from_ad\";i:0;s:7:\"referer\";s:6:\"本站\";s:10:\"login_fail\";i:0;s:9:\"last_time\";s:10:\"1491104455\";s:7:\"last_ip\";s:9:\"127.0.0.1\";s:18:\"VT_MOBILE_VALIDATE\";s:11:\"18554898815\";}' WHERE sesskey = '7748c7fdab3f7777b20da5ac35480a33' LIMIT 1
+
+DELETE FROM `xjddemo`.`ecs_sessions_data` WHERE expiry < 1491102673
+
